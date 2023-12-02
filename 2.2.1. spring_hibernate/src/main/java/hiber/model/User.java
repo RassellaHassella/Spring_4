@@ -9,22 +9,29 @@ public class User {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
-
+   @Column(name = "email")
+   private String email;
    @Column(name = "name")
    private String firstName;
-
    @Column(name = "last_name")
    private String lastName;
 
-   @Column(name = "email")
-   private String email;
 
-   public User() {}
+
+   @OneToOne
+   @JoinColumn(name = "id", referencedColumnName = "id")
+   private Car userCar;
+
    
-   public User(String firstName, String lastName, String email) {
+   public User(String firstName, String lastName, String email, Car userCar) {
       this.firstName = firstName;
       this.lastName = lastName;
       this.email = email;
+      this.userCar = userCar;
+   }
+
+   public User() {
+
    }
 
    public Long getId() {
@@ -57,5 +64,21 @@ public class User {
 
    public void setEmail(String email) {
       this.email = email;
+   }
+   public Car getUserCar() {
+      return userCar;
+   }
+
+   public void setUserCar(Car userCar) {
+      this.userCar = userCar;
+   }
+
+   @Override
+   public String toString() {
+      return "User{" +
+              "email='" + email + '\'' +
+              ", firstName='" + firstName + '\'' +
+              ", lastName='" + lastName + '\'' +
+              '}';
    }
 }
